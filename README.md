@@ -37,8 +37,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Add solution URL here](https://www.frontendmentor.io/solutions/audiophile-e-commerce-website-9aTAnizmFU)
+- Live Site URL: [Add live site URL here](https://github.com/stfnpczk/audiophile)
 
 ## My process
 
