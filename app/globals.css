@@ -1,26 +1,156 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --header-height: 89px;
+}
+
+@custom-variant can-hover {
+  @media (hover: hover) {
+    @slot;
+  }
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  /* Custom colors */
+  --color-orange: #d87d4a;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-darkGray: #cfcfcf;
+  --color-lightGray: #f1f1f1;
+  --color-red: #cd2c2c;
+  --color-lightOrange: #fbaf85;
+  --color-graphite: #4c4c4c;
+  --color-charcoalBlack: #191919;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Arrow nudge used by "Shop" links on hover */
+@keyframes arrow-bounce {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(6px);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  width: 100%;
+}
+
+/* Lock body scroll when mobile menu is open */
+body:has(header[data-menu-open]) {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+/* Page container with max-width constraint and responsive margins */
+.page-container {
+  width: calc(100% - 48px);
+  max-width: 515px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .page-container {
+    width: calc(100% - 137px);
+    max-width: 1300px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-container {
+    width: calc(100% - 144px);
+    max-width: 1300px;
+  }
+}
+
+/* Sonner toast customization */
+[data-sonner-toast][data-type='success'] [data-icon] {
+  color: #22c55e;
+}
+
+#cart-popover {
+  transition:
+    overlay 0.2s ease-out allow-discrete,
+    display 0.2s ease-out allow-discrete;
+}
+
+.cart-popover-content {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transform-origin: top right;
+  transition:
+    opacity 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.1),
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@media (max-width: 767px) {
+  .cart-popover-content {
+    transform-origin: top center;
+  }
+}
+
+#cart-popover:not(:popover-open) .cart-popover-content {
+  opacity: 0;
+  transform: scale(0.3) translateY(-30px);
+}
+
+@starting-style {
+  #cart-popover:popover-open .cart-popover-content {
+    opacity: 0;
+    transform: scale(0.3) translateY(-30px);
+  }
+}
+
+/* Cart popover backdrop */
+#cart-popover::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  transition:
+    opacity 0.2s ease-out,
+    overlay 0.2s ease-out allow-discrete,
+    display 0.2s ease-out allow-discrete;
+  clip-path: inset(var(--header-height) 0 0 0);
+}
+
+#cart-popover:not(:popover-open)::backdrop {
+  opacity: 0;
+}
+
+@starting-style {
+  #cart-popover:popover-open::backdrop {
+    opacity: 0;
+  }
+}
+
+/* Mobile menu backdrop  */
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: var(--header-height) 0 0 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.5s ease-in-out,
+    visibility 0.5s ease-in-out;
+  z-index: 40;
+}
+
+.mobile-menu-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Hide on large screens */
+@media (min-width: 1024px) {
+  .mobile-menu-backdrop {
+    display: none;
+  }
 }
