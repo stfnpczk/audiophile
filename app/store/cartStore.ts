@@ -20,6 +20,9 @@ export type CartStore = CartState & CartActions;
 const MAX_QUANTITY = 99;
 const MIN_QUANTITY = 1;
 
+const clampQuantity = (quantity: number) =>
+  Math.min(Math.max(Math.floor(quantity), MIN_QUANTITY), MAX_QUANTITY);
+
 export const useCartStore = create<CartStore>()(
   persist(
     (set) => ({
@@ -38,11 +41,9 @@ export const useCartStore = create<CartStore>()(
           const existing = state.items.find(
             (i) => i.productId === item.productId,
           );
+          const requested = clampQuantity(quantity);
           if (existing) {
-            const newQuantity = Math.min(
-              existing.quantity + quantity,
-              MAX_QUANTITY,
-            );
+            const newQuantity = clampQuantity(existing.quantity + requested);
             return {
               items: state.items.map((i) =>
                 i.productId === item.productId
@@ -52,16 +53,7 @@ export const useCartStore = create<CartStore>()(
             };
           }
           return {
-            items: [
-              ...state.items,
-              {
-                ...item,
-                quantity: Math.min(
-                  Math.max(quantity, MIN_QUANTITY),
-                  MAX_QUANTITY,
-                ),
-              },
-            ],
+            items: [...state.items, { ...item, quantity: requested }],
           };
         });
       },
@@ -73,7 +65,7 @@ export const useCartStore = create<CartStore>()(
               ? state.items.filter((i) => i.productId !== productId)
               : state.items.map((i) =>
                   i.productId === productId
-                    ? { ...i, quantity: Math.min(quantity, MAX_QUANTITY) }
+                    ? { ...i, quantity: clampQuantity(quantity) }
                     : i,
                 ),
         })),
