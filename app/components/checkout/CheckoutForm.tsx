@@ -79,7 +79,12 @@ export function CheckoutForm() {
   // Show loading state while cart hydrates from localStorage
   if (!isHydrated) {
     return (
-      <div className='grid gap-8 lg:grid-cols-[1fr_350px]'>
+      <div
+        role='status'
+        aria-busy='true'
+        className='grid gap-8 lg:grid-cols-[1fr_350px]'
+      >
+        <span className='sr-only'>Loading checkout…</span>
         {/* Form skeleton */}
         <div className='flex flex-col gap-8 rounded-lg bg-white p-6 md:gap-14 md:p-8 lg:p-12'>
           {/* Title */}

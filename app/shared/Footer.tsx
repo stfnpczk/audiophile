@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { NAV_LINKS } from '@/app/utils/navigation';
 
 const navLinkClasses =
-  'text-sm font-bold tracking-[2px] text-white uppercase transition-colors can-hover:hover:text-lightOrange focus-visible:text-lightOrange focus-visible:outline-none';
+  'text-sm font-bold tracking-[2px] text-white uppercase transition-colors can-hover:hover:text-lightOrange focus-visible:text-lightOrange focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lightOrange';
 
 const socialLinkClasses =
-  'text-white transition-[color,transform] duration-200 can-hover:hover:text-lightOrange can-hover:hover:scale-125 focus-visible:text-lightOrange focus-visible:scale-125 focus-visible:outline-none';
+  'text-white transition-[color,transform] duration-200 can-hover:hover:text-lightOrange can-hover:hover:scale-125 focus-visible:text-lightOrange focus-visible:scale-125 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lightOrange';
 
 const SOCIAL_LINKS = [
   {

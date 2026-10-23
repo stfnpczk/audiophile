@@ -40,8 +40,10 @@ export function TextInput({
         id={inputId}
         aria-invalid={hasError}
         aria-describedby={hasError ? errorId : undefined}
-        className={`h-14 rounded-lg border bg-white px-6 text-sm font-bold outline-none ${
-          hasError ? 'border-red' : 'border-darkGray focus:border-orange'
+        className={`h-14 rounded-lg border bg-white px-6 text-sm font-bold outline-none focus-visible:outline-2 focus-visible:outline-offset-2 ${
+          hasError
+            ? 'border-red focus-visible:outline-red'
+            : 'border-darkGray focus:border-orange focus-visible:outline-orange'
         } ${className}`}
         {...props}
       />
