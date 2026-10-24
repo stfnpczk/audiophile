@@ -53,19 +53,17 @@ describe('checkoutFormSchema', () => {
       paymentMethod: 'e-money',
       payment: { eMoneyNumber: '', eMoneyPin: '' },
     };
-    expect(errorPaths(empty)).toEqual(
-      expect.arrayContaining([
-        'billing.name',
-        'billing.email',
-        'billing.phone',
-        'shipping.address',
-        'shipping.zipCode',
-        'shipping.city',
-        'shipping.country',
-        'payment.eMoneyNumber',
-        'payment.eMoneyPin',
-      ]),
-    );
+    expect([...new Set(errorPaths(empty))].sort()).toEqual([
+      'billing.email',
+      'billing.name',
+      'billing.phone',
+      'payment.eMoneyNumber',
+      'payment.eMoneyPin',
+      'shipping.address',
+      'shipping.city',
+      'shipping.country',
+      'shipping.zipCode',
+    ]);
   });
 
   it('requires a 9-digit e-Money number and 4-digit PIN', () => {
