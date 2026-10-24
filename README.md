@@ -39,8 +39,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Solution on Frontend Mentor](https://www.frontendmentor.io/solutions/audiophile-e-commerce-website-9aTAnizmFU)
-- Live Site URL: [Live site](https://github.com/stfnpczk/audiophile)
+- [Frontend Mentor - solution URL](https://www.frontendmentor.io/solutions/audiophile-e-commerce-website-9aTAnizmFU)
+- [Live site](https://github.com/stfnpczk/audiophile)
 
 ## My process
 
@@ -58,18 +58,11 @@ Users should be able to:
 
 ### What I learned
 
-<!-- TODO: write these in your own words -->
 
 - **Validating persisted state.** The cart is restored from `localStorage` with a Zod schema, so corrupted or outdated data is dropped instead of breaking the app.
 - **Avoiding hydration mismatches.** The cart rehydrates on the client only, and checkout shows a skeleton until it's ready.
 - **Native Popover API and `<dialog>`.** Using them for the cart and the confirmation modal instead of a modal library.
-- **VAT included in prices.** VAT is shown for information but not added to the grand total, which matches the design.
 
-### Continued development
-
-<!-- TODO: what you'd improve next -->
-
-- Component and end-to-end tests for the checkout flow.
 
 ## Running locally
 
@@ -79,7 +72,7 @@ pnpm dev
 pnpm test   # unit tests (Vitest)
 ```
 
-Then open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000).
 
 
 ## Author
