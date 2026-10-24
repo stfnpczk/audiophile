@@ -40,7 +40,7 @@ Users should be able to:
 ### Links
 
 - [Frontend Mentor - solution URL](https://www.frontendmentor.io/solutions/audiophile-e-commerce-website-9aTAnizmFU)
-- [Live site](https://github.com/stfnpczk/audiophile)
+- [Live site](audiophile-nu-wheat.vercel.app)
 
 ## My process
 
