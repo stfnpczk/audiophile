@@ -11,6 +11,7 @@ import { useFocusTrap } from '../hooks/useFocusTrap';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
@@ -34,7 +35,7 @@ export function Header() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isMenuOpen]);
 
-  useFocusTrap(menuRef, isMenuOpen);
+  useFocusTrap(headerRef, isMenuOpen, menuRef);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -46,6 +47,7 @@ export function Header() {
 
   return (
     <header
+      ref={headerRef}
       className='sticky top-0 z-50 bg-charcoalBlack'
       data-menu-open={isMenuOpen ? 'true' : undefined}
     >

@@ -9,15 +9,22 @@ const FOCUSABLE_SELECTORS = [
   '[tabindex]:not([tabindex="-1"]):not([disabled])',
 ].join(', ');
 
+function isVisible(element: HTMLElement): boolean {
+  return typeof element.checkVisibility === 'function'
+    ? element.checkVisibility()
+    : element.getClientRects().length > 0;
+}
+
 function getFocusableElements(container: HTMLElement): HTMLElement[] {
   return Array.from(
     container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS),
-  );
+  ).filter(isVisible);
 }
 
 export function useFocusTrap(
   containerRef: RefObject<HTMLElement | null>,
   isOpen: boolean,
+  initialFocusRef?: RefObject<HTMLElement | null>,
 ) {
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
@@ -28,8 +35,10 @@ export function useFocusTrap(
 
     previousActiveElement.current = document.activeElement as HTMLElement;
 
-    // Focus the first focusable element
-    const focusableElements = getFocusableElements(container);
+    // Focus the first focusable element (within initialFocusRef, if given)
+    const focusableElements = getFocusableElements(
+      initialFocusRef?.current ?? container,
+    );
     if (focusableElements.length > 0) {
       // Small delay to ensure popover is fully rendered
       requestAnimationFrame(() => {
@@ -75,5 +84,5 @@ export function useFocusTrap(
         previousActiveElement.current.focus();
       }
     };
-  }, [isOpen, containerRef]);
+  }, [isOpen, containerRef, initialFocusRef]);
 }
