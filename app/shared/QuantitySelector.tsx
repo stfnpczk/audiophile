@@ -23,7 +23,7 @@ const sizeStyles = {
 };
 
 const buttonClasses =
-  'can-hover:hover:text-orange focus-visible:outline-orange flex cursor-pointer items-center justify-center font-bold text-black/25 transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 disabled:cursor-not-allowed disabled:text-black/25';
+  'can-hover:not-aria-disabled:hover:text-orange focus-visible:outline-orange flex cursor-pointer items-center justify-center font-bold text-black/25 transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 aria-disabled:cursor-not-allowed';
 
 export function QuantitySelector({
   value,
@@ -61,7 +61,7 @@ export function QuantitySelector({
       <button
         type='button'
         onClick={handleDecrement}
-        disabled={value <= min}
+        aria-disabled={value <= min}
         className={`${buttonClasses} ${styles.button}`}
         aria-label={decrementLabel}
       >
@@ -78,7 +78,7 @@ export function QuantitySelector({
       <button
         type='button'
         onClick={handleIncrement}
-        disabled={value >= max}
+        aria-disabled={value >= max}
         className={`${buttonClasses} ${styles.button}`}
         aria-label={incrementLabel}
       >
