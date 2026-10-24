@@ -20,6 +20,8 @@ export type CartStore = CartState & CartActions;
 const MAX_QUANTITY = 99;
 const MIN_QUANTITY = 1;
 
+let hasRetriedHydration = false;
+
 const clampQuantity = (quantity: number) =>
   Math.min(Math.max(Math.floor(quantity), MIN_QUANTITY), MAX_QUANTITY);
 
@@ -75,6 +77,13 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'audiophile-cart',
       skipHydration: true,
+
+      onRehydrateStorage: () => (_state, error) => {
+        if (!error || hasRetriedHydration) return;
+        hasRetriedHydration = true;
+        useCartStore.persist.clearStorage();
+        useCartStore.persist.rehydrate();
+      },
       storage: createJSONStorage(() => ({
         getItem: (name) => {
           const str = safeStorage.get(name);

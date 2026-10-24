@@ -102,3 +102,21 @@ describe('selectors and clearCart', () => {
     expect(items()).toEqual([]);
   });
 });
+
+describe('hydration', () => {
+  it('still finishes hydrating when restoring the saved cart fails', async () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const merge = vi.fn().mockImplementationOnce(() => {
+      throw new Error('corrupt cart');
+    });
+    merge.mockImplementation((_persisted, current) => current);
+    useCartStore.persist.setOptions({ merge });
+
+    await useCartStore.persist.rehydrate();
+    await vi.waitFor(() =>
+      expect(useCartStore.persist.hasHydrated()).toBe(true),
+    );
+    expect(merge).toHaveBeenCalledTimes(2);
+    error.mockRestore();
+  });
+});
