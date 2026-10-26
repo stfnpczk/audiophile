@@ -40,6 +40,16 @@ export function ConfirmationModal({
     return () => dialog.removeEventListener('cancel', handleCancel);
   }, [isOpen, onDismiss]);
 
+  // With cacheComponents, navigating away hides this page in an <Activity>
+  // instead of unmounting it. An open modal dialog would then stay in the top
+  // layer and leave the rest of the document inert, so close it on cleanup.
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    return () => {
+      if (dialog?.open) dialog.close();
+    };
+  }, [isOpen]);
+
   if (!isOpen || items.length === 0) return null;
 
   const firstItem = items[0];
